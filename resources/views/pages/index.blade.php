@@ -6,7 +6,8 @@
       <div class="container" style="margin-left:10px;margin-top:10px">
         <div class="row">
             @foreach($posts as $post)
-                <figure class="col-md-4">
+            
+                <figure  data-postId="{{$post->id}}" class="col-md-4" >
                     <a class="black-text" href="/posts/{{$post->id}}"
                     data-size="1600x1067">
                     <img class="img-fluid" style="height:300px;width:300px" src="/storage/cover_images/{{$post->cover_image}}">
@@ -14,7 +15,8 @@
                     </a>
                     <h3 class="text-center my-3">{{$post->title}}</h3>
                     <div class="interaction">
-                        
+                        <a href="#" class="btn btn-xs btn-warning like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 1 ? 'You like this post' : 'Like' : 'Like'  }}</a> |
+                        <a href="#" class="btn btn-xs btn-danger like">{{ Auth::user()->likes()->where('post_id', $post->id)->first() ? Auth::user()->likes()->where('post_id', $post->id)->first()->like == 0 ? 'You dont like this post' : 'Dislike' : 'Dislike'  }}</a>
                          {{-- <a href="{{ route('like', ['post_id' => $post->id]) }}" class="post-item">Like</a>| --}}
                        
                         <hr>
@@ -34,6 +36,7 @@
 
 
 @endsection
+
 {{-- @extends('layouts.app')
 
 @section('content')
@@ -53,8 +56,8 @@
                 </div>
             </div>
         @endforeach --}}
-        {{$posts->links()}}
+        {{-- {{$posts->links()}}
     @else
         <p>No posts found</p>
     @endif
-@endsection --}}
+@endsection  --}}

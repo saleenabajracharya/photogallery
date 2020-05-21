@@ -31,3 +31,5 @@ Route::get('/about', function () {
 Auth::routes(['verify' =>true]);
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/search','PostsController@search')->name('search');
+Route::post('/like','PostsController@postLikePost')->name('like')->middleware('auth');

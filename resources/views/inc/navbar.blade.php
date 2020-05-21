@@ -3,30 +3,22 @@
     <div class="container">
         <a class="navbar-brand" href='/'>INSTA
         </a>
+        <form action="{{route ('search')}}" method="GET" class="search-form">
+                                      
+            <input class="form-control" name="query" id="query" value="" type="text" placeholder="Search" aria-label="Search">
+
+                </form>
+        {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
-        </button>
+        </button> --}}
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-
+    
+               
             </ul>
-            <ul class="navbar-nav mr-auto">
-                {{-- <li class="nav-item active">
-                  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/services">Services</a>
-                  </li> --}}
-                  {{-- <li class="nav-item">
-                    <a class="nav-link" href="/posts">Post</a>
-                  </li> --}}
-                  
-              </ul>
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
+use App\Like;
 class PostsController extends Controller
 {
     /**
@@ -170,5 +171,49 @@ class PostsController extends Controller
         }
         $post->delete();
         return redirect('/posts')->with('success','Post Removed');
+    }
+    public function search(Request $request){
+        
+        $request->validate([
+            'query'=>'required|min:3',
+        ]);
+        
+        $query =$request->input('query');
+        $posts=Post::where('title','like',"%$query%")
+                        ->orwhere('body','like',"%$query%")->paginate(10);
+           
+        return view ('posts.search-result')->with('posts',$posts);
+    }
+
+    public function postLikePost(Request $request)
+    {
+        $post_id = $request['postId'];
+        $is_like = $request['isLike'] === 'true';
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = Auth::user();
+        $like = $user->likes()->where('post_id', $post_id)->first();
+        if ($like) {
+            $already_like = $like->like;
+            $update = true;
+            if ($already_like == $is_like) {
+                $like->delete();
+                return null;
+            }
+        } else {
+            $like = new Like();
+        }
+        $like->like = $is_like;
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        if ($update) {
+            $like->update();
+        } else {
+            $like->save();
+        }
+        return null;
     }
 }
