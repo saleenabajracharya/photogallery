@@ -5,7 +5,7 @@
         </a>
         <form action="{{route ('search')}}" method="GET" class="search-form">
                                       
-            <input class="form-control" name="query" id="query" value="" type="text" placeholder="Search" aria-label="Search">
+            <input class="form-control" style="margin-left:320px;width:250px" name="query" id="query" value="" type="text" placeholder="Search" aria-label="Search">
 
                 </form>
         {{-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

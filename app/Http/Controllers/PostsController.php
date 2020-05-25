@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Post;
 use App\Like;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 class PostsController extends Controller
 {
     /**
@@ -24,8 +26,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts =Post::orderBy('created_at','desc')->paginate(10);
-        return view('posts.index')->with('posts',$posts);
+        $posts = Post::orderBy('created_at', 'desc')->get();
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -175,7 +177,7 @@ class PostsController extends Controller
     public function search(Request $request){
         
         $request->validate([
-            'query'=>'required|min:3',
+            'query'=>'required|min:2',
         ]);
         
         $query =$request->input('query');
@@ -185,35 +187,36 @@ class PostsController extends Controller
         return view ('posts.search-result')->with('posts',$posts);
     }
 
+        
     public function postLikePost(Request $request)
-    {
-        $post_id = $request['postId'];
-        $is_like = $request['isLike'] === 'true';
-        $update = false;
-        $post = Post::find($post_id);
-        if (!$post) {
-            return null;
-        }
-        $user = Auth::user();
-        $like = $user->likes()->where('post_id', $post_id)->first();
-        if ($like) {
-            $already_like = $like->like;
-            $update = true;
-            if ($already_like == $is_like) {
-                $like->delete();
-                return null;
-            }
-        } else {
-            $like = new Like();
-        }
-        $like->like = $is_like;
-        $like->user_id = $user->id;
-        $like->post_id = $post->id;
-        if ($update) {
-            $like->update();
-        } else {
-            $like->save();
-        }
-        return null;
-    }
+       {
+           $post_id = $request['postId'];
+           $is_like = $request['isLike'] === 'true';
+           $update = false;
+           $post = Post::find($post_id);
+           if (!$post) {
+               return null;
+           }
+           $user = Auth::user();
+           $like = $user->likes()->where('post_id', $post_id)->first();
+           if ($like) {
+               $already_like = $like->like;
+               $update = true;
+               if ($already_like == $is_like) {
+                   $like->delete();
+                   return null;
+               }
+           } else {
+               $like = new Like();
+           }
+           $like->like = $is_like;
+           $like->user_id = $user->id;
+           $like->post_id = $post->id;
+           if ($update) {
+               $like->update();
+           } else {
+               $like->save();
+           }
+           return null;
+       }
 }

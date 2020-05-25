@@ -8,8 +8,13 @@ class Post extends Model
 {
     public function user(){
         return $this->belongsTo('App\User');
-    }
-    public function likes(){
+      }
+      
+      public function likes(){
         return $this->belongsTo('App\Like');
-    }   
+      }
+
+      public function post(){
+        return $this->belongsTo('App\Post');
+      }
 }
