@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <h1>Create Posts</h1>
@@ -16,4 +16,4 @@
         </div>
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
-@endsection
+@endsection --}}

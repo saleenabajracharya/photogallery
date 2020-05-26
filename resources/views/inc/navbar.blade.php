@@ -47,7 +47,7 @@
                                 {{ __('Logout') }}
                             </a>
                             <a class="dropdown-item" href="/dashboard">
-                             {{ __('Dashboard') }}
+                             {{ __('Profile') }}
                          </a>
                        
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
